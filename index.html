@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chater's Restaurant - Une expérience culinaire unique">
+  <title>Chater's Restaurant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #e74c3c;
+      --secondary-color: #f39c12;
+      --accent-color: #f1c40f;
+      --success-color: #27ae60;
+      --text-color: #2c3e50;
+      --white: #fff;
+      --black: #000;
+      --background: linear-gradient(135deg, #fff5f5, #fff9e6);
+      --card-background: #fff;
+      --border-color: #e0e0e0;
+      --shadow-color: rgba(231, 76, 60, 0.2);
+      --transition: all 0.3s ease;
+      --border-radius: 15px;
+      --box-shadow: 0 4px 15px var(--shadow-color);
+      --gradient-primary: linear-gradient(135deg, #e74c3c, #f39c12);
+      --gradient-secondary: linear-gradient(135deg, #f39c12, #f1c40f);
+      --gradient-accent: linear-gradient(135deg, #f1c40f, #27ae60);
+      --gradient-success: linear-gradient(135deg, #27ae60, #2ecc71);
+    }
+
+    [data-theme="dark"] {
+      --text-color: #ecf0f1;
+      --white: #2c3e50;
+      --black: #ecf0f1;
+      --background: linear-gradient(135deg, #2c3e50, #34495e);
+      --card-background: #34495e;
+      --border-color: #4a5568;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1em 2em;
+      background: var(--gradient-primary);
+      color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2em;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      transition: var(--transition);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2em;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 8px 16px;
+      border-radius: 25px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: var(--white);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 1.2em;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1) rotate(15deg);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8em;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Carousel */
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      opacity: 0;
+      filter: brightness(0.6) contrast(1.1) saturate(1.2);
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scale(1.05);
+    }
+
+    .carousel img.active {
+      left: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .carousel img.prev {
+      left: -100%;
+      opacity: 0;
+    }
+
+    .carousel-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(2.5em, 6vw, 5em);
+      color: var(--white);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      z-index: 2;
+      text-align: center;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      animation: titleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes titleFloat {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+      50% { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+
+    .carousel-title h1 {
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      font-size: 60px;
+    }
+
+    .carousel-title p {  
+      font-size: 20px;
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--gradient-primary);
+      color: var(--white);
+      border: none;
+      font-size: 2em;
+      padding: 20px;
+      cursor: pointer;
+      z-index: 2;
+      transition: var(--transition);
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    .carousel-button:hover {
+      background: var(--gradient-secondary);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5);
+    }
+
+    .carousel-button.left {
+      left: 30px;
+    }
+
+    .carousel-button.right {
+      right: 30px;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      z-index: 2;
+    }
+
+    .carousel-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .carousel-indicator.active {
+      background: var(--accent-color);
+      transform: scale(1.2);
+      border-color: var(--white);
+    }
+
+    /* Section formulaire */
+    .form-section {
+      padding: 5em 2em;
+      background: var(--background);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .form-section h2 {
+      margin-bottom: 2em;
+      text-align: center;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      max-width: 700px;
+      margin: 0 auto 3em auto;
+      padding: 3em;
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      border: 2px solid var(--border-color);
+    }
+
+    input, select, textarea {
+      padding: 15px;
+      font-size: 1.1em;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      transition: var(--transition);
+      font-family: 'Poppins', sans-serif;
+      background: var(--card-background);
+      color: var(--text-color);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+      transform: translateY(-2px);
+    }
+
+    button {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+      font-size: 1.1em;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    button:hover {
+      background: var(--gradient-secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+    }
+
+    /* Filtres et recherche */
+    .filter-section {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 2em;
+    }
+
+    .search-container {
+      position: relative;
+      margin-bottom: 2em;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 1em 3em 1em 1em;
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      font-size: 1em;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 1em;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-color);
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.8em 1.5em;
+      border: none;
+      border-radius: 25px;
+      background: var(--card-background);
+      color: var(--text-color);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow);
+    }
+
+    .filter-btn.active {
+      background: var(--gradient-primary);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* Carousel des recettes */
+    .recipes-carousel-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3em 0;
+    }
+
+    .recipes-carousel {
+      display: flex;
+      gap: 2em;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 2em;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .recipes-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .recipe-card {
+      min-width: 320px;
+      background: var(--card-background);
+      padding: 2em;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .recipe-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-accent);
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 8px 25px var(--shadow-color);
+      border-color: var(--primary-color);
+    }
+
+    .recipe-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1.5em;
+      transition: var(--transition);
+    }
+
+    .recipe-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .recipe-card h4 {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1em;
+      font-size: 1.3em;
+    }
+
+    .recipe-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 1em;
+    }
+
+    .edit-btn {
+      background: var(--gradient-secondary) !important;
+      flex: 1;
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+      flex: 1;
+    }
+
+    /* Lien vers le menu */
+    .menu-link {
+      text-align: center;
+      margin: 2em 0;
+    }
+
+    .menu-link a {
+      display: inline-block;
+      padding: 1em 2em;
+      background: var(--gradient-accent);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1.1em;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+    }
+
+    .menu-link a:hover {
+      background: var(--gradient-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    }
+
+    /* Timer de préparation */
+    .preparation-timer {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-background);
+      padding: 2em;
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px var(--shadow-color);
+      z-index: 3000;
+      text-align: center;
+      border: 3px solid var(--primary-color);
+      min-width: 300px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .preparation-timer.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .timer-dish-name {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 1em;
+    }
+
+    .timer-display {
+      font-size: 3em;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 1em 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .timer-progress {
+      width: 100%;
+      height: 8px;
+      background: var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1em 0;
+    }
+
+    .timer-progress-bar {
+      height: 100%;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    .timer-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 5em 2em;
+      margin-top: 5em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--gradient-accent);
+    }
+
+    .footer-content {
+      color: var(--white);
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1.5em;
+      position: relative;
+      font-size: 1.3em;
+      color: var(--white);
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--white);
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--accent-color);
+      transform: translateY(-3px) scale(1.1);
+      color: var(--text-color);
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 1.5em 2.5em;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: var(--transition);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      z-index: 2000;
+    }
+
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Modal du plat du jour */
+    .daily-special-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4000;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      backdrop-filter: blur(5px);
+    }
+
+    .daily-special-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .daily-special-modal {
+      background: var(--card-background);
+      border-radius: 20px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.8) translateY(50px);
+      transition: var(--transition);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 3px solid var(--primary-color);
+    }
+
+    .daily-special-overlay.show .daily-special-modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .daily-special-header {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 1.5em;
+      border-radius: 17px 17px 0 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .daily-special-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .daily-special-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .daily-special-title {
+      font-size: 1.8em;
+      margin-bottom: 0.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .daily-special-subtitle {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .daily-special-content {
+      padding: 2em;
+    }
+
+    .daily-special-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 1.5em;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .daily-special-name {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 1em;
+      text-align: center;
+    }
+
+    .daily-special-description {
+      color: var(--text-color);
+      line-height: 1.6;
+      margin-bottom: 1.5em;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .daily-special-price {
+      background: var(--gradient-accent);
+      color: var(--white);
+      padding: 1em;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-bottom: 1.5em;
+      box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+    }
+
+    .daily-special-actions {
+      display: flex;
+      gap: 1em;
+      flex-direction: column;
+    }
+
+    .daily-special-btn {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 1em 2em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+      font-size: 1.1em;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    .daily-special-btn:hover {
+      background: var(--gradient-secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+    }
+
+    .daily-special-btn.secondary {
+      background: var(--card-background);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .daily-special-btn.secondary:hover {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    .daily-special-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-color);
+      color: var(--text-color);
+      padding: 0.5em 1.5em;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9em;
+      box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--gradient-primary);
+        padding: 2em;
+        gap: 1em;
+      }
+      
+      .carousel-title {
+        font-size: 2em;
+        padding: 20px 30px;
+      }
+      
+      .carousel {
+        height: 60vh;
+      }
+      
+      .form-section {
+        padding: 3em 1em;
+      }
+      
+      .recipe-card {
+        min-width: 280px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2em;
+      }
+
+      .nav-right {
+        gap: 0.5em;
+      }
+
+      .preparation-timer {
+        min-width: 250px;
+        padding: 1.5em;
+      }
+
+      .timer-display {
+        font-size: 2em;
+      }
+
+      .daily-special-modal {
+        margin: 1em;
+        max-width: none;
+      }
+      
+      .daily-special-content {
+        padding: 1.5em;
+      }
+      
+      .daily-special-image {
+        height: 200px;
+      }
+      
+      .daily-special-actions {
+        gap: 0.5em;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section, .recipe-card {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .timer-display {
+      animation: pulse 1s infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- Modal du plat du jour -->
+  <div class="daily-special-overlay" id="dailySpecialOverlay">
+    <div class="daily-special-modal">
+      <div class="daily-special-badge">🌟 SPÉCIAL DU JOUR</div>
+      <div class="daily-special-header">
+        <button class="daily-special-close" onclick="closeDailySpecial()">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2 class="daily-special-title">
+          <i class="fas fa-star"></i> Plat du Jour
+        </h2>
+        <p class="daily-special-subtitle">Découvrez notre création spéciale d'aujourd'hui</p>
+      </div>
+      <div class="daily-special-content">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?auto=format&fit=crop&w=500" 
+             alt="Plat du jour" class="daily-special-image" id="dailySpecialImage">
+        <h3 class="daily-special-name" id="dailySpecialName">Saumon Grillé aux Herbes de Provence</h3>
+        <p class="daily-special-description" id="dailySpecialDescription">
+          Filet de saumon frais grillé à la perfection, accompagné de légumes de saison rôtis et d'une sauce au beurre blanc aux herbes de Provence. Un plat raffiné qui célèbre les saveurs méditerranéennes.
+        </p>
+        <div class="daily-special-price" id="dailySpecialPrice">
+          <i class="fas fa-tag"></i> Prix spécial : 22.90 dh
+          <small style="display: block; font-size: 0.8em; opacity: 0.8; margin-top: 0.5em;">
+            Au lieu de 26.90 dh - Économisez 4 dh !
+          </small>
+        </div>
+        <div class="daily-special-actions">
+          <button class="daily-special-btn" onclick="orderDailySpecial()">
+            <i class="fas fa-shopping-cart"></i> Commander maintenant
+          </button>
+          <button class="daily-special-btn secondary" onclick="viewMenu()">
+            <i class="fas fa-book-open"></i> Voir le menu complet
+          </button>
+          <button class="daily-special-btn secondary" onclick="closeDailySpecial()">
+            <i class="fas fa-times"></i> Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-left">
+      <div class="logo">
+        <i class="fas fa-utensils"></i>
+        Chater's
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+        <a href="menu.html"><i class="fas fa-book-open"></i> Menu</a>
+        <a href="reservations.html"><i class="fas fa-calendar-alt"></i> Réservation</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Basculer le thème">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="carousel-title">
+      <h1>Chater's Restaurant</h1>
+      <p>Une expérience culinaire unique</p>
+    </div>
+    <div class="carousel-container">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200" class="active" alt="Présentation de nos plats">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200" alt="Ambiance du restaurant">
+      <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200" alt="Notre espace de restauration">
+    </div>
+    <button class="carousel-button left" aria-label="Image précédente">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="carousel-button right" aria-label="Image suivante">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="carousel-indicators">
+      <div class="carousel-indicator active" data-slide="0"></div>
+      <div class="carousel-indicator" data-slide="1"></div>
+      <div class="carousel-indicator" data-slide="2"></div>
+    </div>
+  </div>
+
+  <!-- Filtres et recherche -->
+  <div class="filter-section">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Rechercher une recette...">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">Tous</button>
+      <button class="filter-btn" data-filter="Salty">Salé</button>
+      <button class="filter-btn" data-filter="Sweet">Sucré</button>
+      <button class="filter-btn" data-filter="Drinks">Boissons</button>
+    </div>
+  </div>
+
+  <!-- Section formulaire -->
+  <div class="form-section" id="add-recipe">
+    <h2><i class="fas fa-plus-circle"></i> Ajouter votre propre recette</h2>
+    <form id="recipeForm">
+      <div class="form-group">
+        <label for="recipeName">Nom de la recette</label>
+        <input type="text" id="recipeName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="recipeType">Type de recette</label>
+        <select id="recipeType" required>
+          <option value="">Sélectionnez un type</option>
+          <option value="Salty">Salé</option>
+          <option value="Sweet">Sucré</option>
+          <option value="Drinks">Boissons</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="recipeDesc">Description ou ingrédients</label>
+        <textarea id="recipeDesc" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="recipeImg">Image URL</label>
+        <input type="url" id="recipeImg" required>
+      </div>
+
+      <div class="form-group">
+        <label for="recipePrice">Prix (dh)</label>
+        <input type="number" id="recipePrice" step="0.01" min="0" placeholder="Ex: 12.50" required>
+      </div>
+
+      <button type="submit">
+        <i class="fas fa-plus"></i> Ajouter la recette
+      </button>
+    </form>
+
+    <div class="recipes-carousel-container">
+      <div class="recipes-carousel" id="recipeList"></div>
+    </div>
+
+    <!-- Lien vers le menu complet -->
+    <div class="menu-link">
+      <a href="menu.html">
+        <i class="fas fa-book-open"></i> Voir le menu complet
+      </a>
+    </div>
+  </div>
+
+  <!-- Timer de préparation -->
+  <div class="preparation-timer" id="preparationTimer">
+    <button class="timer-close" onclick="closeTimer()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="timer-dish-name" id="timerDishName"></div>
+    <div>Temps de préparation restant :</div>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="timer-progress">
+      <div class="timer-progress-bar" id="timerProgressBar"></div>
+    </div>
+    <div id="timerStatus">Préparation en cours...</div>
+  </div>
+  
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3><i class="fas fa-map-marker-alt"></i> Localisation</h3>
+        <p>123 Rue de la Cuisine<br>75001 Paris, France</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3><i class="fas fa-clock"></i> Horaires</h3>
+        <p>
+          <span style="color: var(--accent-color); font-weight: bold;">Lundi - Vendredi:</span> 11h00 - 22h00<br>
+          <span style="color: var(--accent-color); font-weight: bold;">Samedi - Dimanche:</span> 12h00 - 00h00
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h3><i class="fas fa-phone"></i> Contact</h3>
+        <p>
+          Téléphone: <span style="color: var(--accent-color);">+33 1 23 45 67 89</span><br>
+          Email: <span style="color: var(--accent-color);">contact@chaters.fr</span>
+        </p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Gestion du thème
+    class ThemeManager {
+      constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.themeToggle = document.getElementById('themeToggle');
+        this.init();
+      }
+
+      init() {
+        this.applyTheme(this.currentTheme);
+        this.themeToggle.addEventListener('click', () => this.toggleTheme());
+      }
+
+      applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const icon = this.themeToggle.querySelector('i');
+        
+        if (theme === 'dark') {
+          icon.className = 'fas fa-sun';
+        } else {
+          icon.className = 'fas fa-moon';
+        }
+        
+        this.currentTheme = theme;
+        localStorage.setItem('theme', theme);
+      }
+
+      toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme(newTheme);
+      }
+    }
+
+    // Gestion du timer de préparation
+    class PreparationTimer {
+      constructor() {
+        this.timerElement = document.getElementById('preparationTimer');
+        this.displayElement = document.getElementById('timerDisplay');
+        this.progressBar = document.getElementById('timerProgressBar');
+        this.dishNameElement = document.getElementById('timerDishName');
+        this.statusElement = document.getElementById('timerStatus');
+        this.currentTimer = null;
+      }
+
+      getPreparationTime(dishType) {
+        const times = {
+          'Salty': { min: 15, max: 25 }, // 15-25 minutes
+          'Sweet': { min: 10, max: 20 }, // 10-20 minutes
+          'Drinks': { min: 2, max: 5 }   // 2-5 minutes
+        };
+        
+        const range = times[dishType] || { min: 10, max: 20 };
+        return Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+      }
+
+      startTimer(dishName, dishType) {
+        if (this.currentTimer) {
+          clearInterval(this.currentTimer);
+        }
+
+        const totalMinutes = this.getPreparationTime(dishType);
+        let totalSeconds = totalMinutes * 60;
+        const originalTotalSeconds = totalSeconds;
+
+        this.dishNameElement.textContent = dishName;
+        this.statusElement.textContent = 'Préparation en cours...';
+        this.timerElement.classList.add('show');
+
+        this.currentTimer = setInterval(() => {
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          
+          this.displayElement.textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          // Mettre à jour la barre de progression
+          const progress = ((originalTotalSeconds - totalSeconds) / originalTotalSeconds) * 100;
+          this.progressBar.style.width = `${progress}%`;
+
+          if (totalSeconds <= 0) {
+            clearInterval(this.currentTimer);
+            this.onTimerComplete();
+          }
+
+          totalSeconds--;
+        }, 1000);
+      }
+
+      onTimerComplete() {
+        this.displayElement.textContent = '00:00';
+        this.progressBar.style.width = '100%';
+        this.statusElement.textContent = '✅ Votre plat est prêt !';
+        
+        // Notification sonore (si supportée)
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('Chater\'s Restaurant', {
+            body: `Votre ${this.dishNameElement.textContent} est prêt !`,
+            icon: '/favicon.ico'
+          });
+        }
+
+        // Auto-fermeture après 5 secondes
+        setTimeout(() => {
+          this.closeTimer();
+        }, 5000);
+      }
+
+      closeTimer() {
+        if (this.currentTimer) {
+          clearInterval(this.currentTimer);
+          this.currentTimer = null;
+        }
+        this.timerElement.classList.remove('show');
+      }
+    }
+
+    // Fonction globale pour fermer le timer
+    function closeTimer() {
+      window.preparationTimer.closeTimer();
+    }
+
+    // Gestion du menu mobile
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Carousel principal
+    const images = document.querySelectorAll(".carousel-container img");
+    const indicators = document.querySelectorAll(".carousel-indicator");
+    let currentIndex = 0;
+    let interval;
+
+    function showSlide(index) {
+      images.forEach((img, i) => {
+        img.classList.remove("active", "prev");
+        if (i === index) {
+          img.classList.add("active");
+        } else if (i === currentIndex) {
+          img.classList.add("prev");
+        }
+      });
+
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle("active", i === index);
+      });
+
+      currentIndex = index;
+    }
+
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % images.length;
+      showSlide(nextIndex);
+    }
+
+    function prevSlide() {
+      const prevIndex = (currentIndex - 1 + images.length) % images.length;
+      showSlide(prevIndex);
+    }
+
+    function startCarousel() {
+      interval = setInterval(nextSlide, 4000);
+    }
+
+    function stopCarousel() {
+      clearInterval(interval);
+    }
+
+    // Gestion des indicateurs
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        stopCarousel();
+        showSlide(index);
+        setTimeout(startCarousel, 3000);
+      });
+    });
+
+    // Gestion des recettes
+    class RecipeManager {
+      constructor() {
+        this.form = document.getElementById("recipeForm");
+        this.recipeList = document.getElementById("recipeList");
+        this.editingId = null;
+        this.setupEventListeners();
+        this.loadRecipes();
+      }
+
+      setupEventListeners() {
+        this.form.addEventListener("submit", (e) => this.handleSubmit(e));
+      }
+
+      handleSubmit(e) {
+        e.preventDefault();
+        const formData = this.getFormData();
+        
+        if (this.editingId) {
+          this.updateRecipe(this.editingId, formData);
+          this.editingId = null;
+        } else {
+          this.addRecipe(formData);
+        }
+
+        this.form.reset();
+        this.showNotification('Recette sauvegardée avec succès! Elle apparaîtra automatiquement dans le menu.');
+        
+        // Déclencher un événement pour notifier les autres pages
+        window.dispatchEvent(new Event('recipeUpdated'));
+      }
+
+      getFormData() {
+        return {
+          id: Date.now(),
+          name: document.getElementById("recipeName").value,
+          type: document.getElementById("recipeType").value,
+          desc: document.getElementById("recipeDesc").value,
+          img: document.getElementById("recipeImg").value,
+          price: parseFloat(document.getElementById("recipePrice").value).toFixed(2)
+        };
+      }
+
+      addRecipe(recipe) {
+        const recipes = this.getRecipes();
+        recipes.push(recipe);
+        this.saveRecipes(recipes);
+        this.addRecipeToDOM(recipe);
+      }
+
+      updateRecipe(id, updatedData) {
+        let recipes = this.getRecipes();
+        recipes = recipes.map(recipe =>
+          recipe.id === id ? { ...recipe, ...updatedData } : recipe
+        );
+        this.saveRecipes(recipes);
+        this.refreshRecipeList();
+      }
+
+      deleteRecipe(id) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')) {
+          let recipes = this.getRecipes().filter(recipe => recipe.id !== id);
+          this.saveRecipes(recipes);
+          this.refreshRecipeList();
+          this.showNotification('Recette supprimée avec succès!');
+          
+          // Déclencher un événement pour notifier les autres pages
+          window.dispatchEvent(new Event('recipeUpdated'));
+        }
+      }
+
+      editRecipe(id) {
+        const recipe = this.getRecipes().find(r => r.id === id);
+        if (!recipe) return;
+
+        document.getElementById("recipeName").value = recipe.name;
+        document.getElementById("recipeType").value = recipe.type;
+        document.getElementById("recipeDesc").value = recipe.desc;
+        document.getElementById("recipeImg").value = recipe.img;
+        document.getElementById("recipePrice").value = recipe.price || "0.00";
+
+        this.editingId = id;
+        document.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-edit"></i> Modifier la recette';
+      }
+
+      addRecipeToDOM(recipe) {
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+        card.setAttribute("data-id", recipe.id);
+
+        card.innerHTML = `
+          <img src="${recipe.img}" alt="${recipe.name}" loading="lazy">
+          <h4>${recipe.name}</h4>
+          <p><strong><i class="fas fa-tag"></i> ${recipe.type}</strong></p>
+          <p>${recipe.desc}</p>
+          <div class="recipe-actions">
+            <button onclick="recipeManager.editRecipe(${recipe.id})" class="edit-btn">
+              <i class="fas fa-edit"></i> Modifier
+            </button>
+            <button onclick="recipeManager.deleteRecipe(${recipe.id})" class="delete-btn">
+              <i class="fas fa-trash"></i> Supprimer
+            </button>
+            <button onclick="window.preparationTimer.startTimer('${recipe.name}', '${recipe.type}')" class="edit-btn" style="background: var(--gradient-success) !important;">
+              <i class="fas fa-clock"></i> Commander
+            </button>
+          </div>
+        `;
+
+        this.recipeList.appendChild(card);
+      }
+
+      refreshRecipeList() {
+        this.recipeList.innerHTML = '';
+        this.getRecipes().forEach(recipe => this.addRecipeToDOM(recipe));
+      }
+
+      getRecipes() {
+        return JSON.parse(localStorage.getItem("recipes") || "[]");
+      }
+
+      saveRecipes(recipes) {
+        localStorage.setItem("recipes", JSON.stringify(recipes));
+      }
+
+      loadRecipes() {
+        this.getRecipes().forEach(recipe => this.addRecipeToDOM(recipe));
+      }
+
+      showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.add('show');
+          setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+          }, 3000);
+        }, 100);
+      }
+
+      filterRecipes(type) {
+        const recipes = this.getRecipes();
+        const filteredRecipes = type === 'all' 
+          ? recipes 
+          : recipes.filter(recipe => recipe.type === type);
+        
+        this.recipeList.innerHTML = '';
+        filteredRecipes.forEach(recipe => this.addRecipeToDOM(recipe));
+      }
+
+      searchRecipes(query) {
+        const recipes = this.getRecipes();
+        const searchResults = recipes.filter(recipe => 
+          recipe.name.toLowerCase().includes(query.toLowerCase()) ||
+          recipe.desc.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        this.recipeList.innerHTML = '';
+        searchResults.forEach(recipe => this.addRecipeToDOM(recipe));
+      }
+    }
+
+    // Gestion de la modal du plat du jour
+    class DailySpecialManager {
+      constructor() {
+        this.overlay = document.getElementById('dailySpecialOverlay');
+        this.modal = this.overlay.querySelector('.daily-special-modal');
+        this.dailySpecials = [
+          {
+            name: "Saumon Grillé aux Herbes de Provence",
+            description: "Filet de saumon frais grillé à la perfection, accompagné de légumes de saison rôtis et d'une sauce au beurre blanc aux herbes de Provence. Un plat raffiné qui célèbre les saveurs méditerranéennes.",
+            image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?auto=format&fit=crop&w=500",
+            originalPrice: "26.90",
+            specialPrice: "22.90",
+            savings: "4"
+          },
+          {
+            name: "Risotto aux Champignons Porcini",
+            description: "Risotto crémeux préparé avec des champignons porcini séchés, du parmesan vieilli 24 mois et une pointe de truffe blanche. Un voyage gustatif en Italie du Nord.",
+            image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=500",
+            originalPrice: "19.90",
+            specialPrice: "16.90",
+            savings: "3"
+          },
+          {
+            name: "Magret de Canard aux Cerises",
+            description: "Magret de canard rosé accompagné d'une sauce aux cerises et au porto, purée de patates douces et haricots verts almondine. Une harmonie parfaite entre sucré et salé.",
+            image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500",
+            originalPrice: "28.90",
+            specialPrice: "24.90",
+            savings: "4"
+          }
+        ];
+        this.init();
+      }
+
+      init() {
+        // Afficher la modal à chaque chargement/actualisation de la page
+        setTimeout(() => {
+          this.showDailySpecial();
+        }, 2000);
+
+        // Fermer la modal en cliquant à l'extérieur
+        this.overlay.addEventListener('click', (e) => {
+          if (e.target === this.overlay) {
+            this.closeDailySpecial();
+          }
+        });
+
+        // Fermer avec la touche Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.overlay.classList.contains('show')) {
+            this.closeDailySpecial();
+          }
+        });
+      }
+
+      getTodaysSpecial() {
+        // Sélectionner un plat basé sur la date pour avoir un plat différent chaque jour
+        const today = new Date();
+        const dayIndex = today.getDate() % this.dailySpecials.length;
+        return this.dailySpecials[dayIndex];
+      }
+
+      showDailySpecial() {
+        const special = this.getTodaysSpecial();
+        
+        // Mettre à jour le contenu
+        document.getElementById('dailySpecialName').textContent = special.name;
+        document.getElementById('dailySpecialDescription').textContent = special.description;
+        document.getElementById('dailySpecialImage').src = special.image;
+        document.getElementById('dailySpecialImage').alt = special.name;
+        
+        const priceElement = document.getElementById('dailySpecialPrice');
+        priceElement.innerHTML = `
+          <i class="fas fa-tag"></i> Prix spécial : ${special.specialPrice} dh
+          <small style="display: block; font-size: 0.8em; opacity: 0.8; margin-top: 0.5em;">
+            Au lieu de ${special.originalPrice} dh - Économisez ${special.savings} dh !
+          </small>
+        `;
+
+        // Afficher la modal
+        this.overlay.classList.add('show');
+        
+        // Empêcher le scroll du body
+        document.body.style.overflow = 'hidden';
+      }
+
+      closeDailySpecial() {
+        this.overlay.classList.remove('show');
+        
+        // Restaurer le scroll du body
+        document.body.style.overflow = '';
+      }
+
+      orderDailySpecial() {
+        const special = this.getTodaysSpecial();
+        
+        // Démarrer le timer de préparation
+        window.preparationTimer.startTimer(special.name, 'Salty');
+        
+        // Afficher une notification
+        this.showNotification(`${special.name} ajouté à votre commande ! Préparation en cours...`, 'success');
+        
+        // Fermer la modal
+        this.closeDailySpecial();
+      }
+
+      viewMenu() {
+        // Rediriger vers la page menu
+        window.location.href = 'menu.html';
+      }
+
+      showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
+        notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
+        
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.add('show');
+          setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+          }, 3000);
+        }, 100);
+      }
+    }
+
+    // Initialisation
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initialiser les gestionnaires
+      window.themeManager = new ThemeManager();
+      window.preparationTimer = new PreparationTimer();
+      
+      // Demander permission pour les notifications
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+
+      showSlide(currentIndex);
+      startCarousel();
+      
+      const carousel = document.querySelector(".carousel");
+      carousel.addEventListener("mouseover", stopCarousel);
+      carousel.addEventListener("mouseout", startCarousel);
+      
+      document.querySelector(".carousel-button.left").addEventListener("click", () => {
+        stopCarousel();
+        prevSlide();
+        setTimeout(startCarousel, 3000);
+      });
+      
+      document.querySelector(".carousel-button.right").addEventListener("click", () => {
+        stopCarousel();
+        nextSlide();
+        setTimeout(startCarousel, 3000);
+      });
+
+      window.recipeManager = new RecipeManager();
+
+      // Filtres
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          window.recipeManager.filterRecipes(btn.dataset.filter);
+        });
+      });
+
+      // Recherche
+      const searchInput = document.getElementById('searchInput');
+      let debounceTimer;
+      
+      searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          window.recipeManager.searchRecipes(searchInput.value);
+        }, 300);
+      });
+
+      // Initialiser le gestionnaire du plat du jour
+      window.dailySpecialManager = new DailySpecialManager();
+
+      // Fonctions globales pour les boutons
+      window.closeDailySpecial = () => window.dailySpecialManager.closeDailySpecial();
+      window.orderDailySpecial = () => window.dailySpecialManager.orderDailySpecial();
+      window.viewMenu = () => window.dailySpecialManager.viewMenu();
+    });
+
+    // Scroll fluide
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

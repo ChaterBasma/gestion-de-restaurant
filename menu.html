@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Menu - Chater's Restaurant">
+  <title>Menu - Chater's Restaurant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #e74c3c;
+      --secondary-color: #f39c12;
+      --accent-color: #f1c40f;
+      --success-color: #27ae60;
+      --text-color: #2c3e50;
+      --white: #fff;
+      --black: #000;
+      --background: linear-gradient(135deg, #fff5f5, #fff9e6);
+      --card-background: #fff;
+      --border-color: #e0e0e0;
+      --shadow-color: rgba(231, 76, 60, 0.2);
+      --transition: all 0.3s ease;
+      --border-radius: 15px;
+      --box-shadow: 0 4px 15px var(--shadow-color);
+      --gradient-primary: linear-gradient(135deg, #e74c3c, #f39c12);
+      --gradient-secondary: linear-gradient(135deg, #f39c12, #f1c40f);
+      --gradient-accent: linear-gradient(135deg, #f1c40f, #27ae60);
+    }
+
+    [data-theme="dark"] {
+      --text-color: #ecf0f1;
+      --white: #2c3e50;
+      --black: #ecf0f1;
+      --background: linear-gradient(135deg, #2c3e50, #34495e);
+      --card-background: #34495e;
+      --border-color: #4a5568;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: var(--transition);
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1em 2em;
+      background: var(--gradient-primary);
+      color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2em;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      transition: var(--transition);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2em;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 8px 16px;
+      border-radius: 25px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.3);
+      font-weight: 600;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: var(--white);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 1.2em;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1) rotate(15deg);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8em;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    /* Header du menu */
+    .menu-header {
+      background: var(--gradient-primary);
+      color: var(--white);
+      text-align: center;
+      padding: 4em 2em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200') center/cover;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .menu-header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .menu-header h1 {
+      font-size: 3.5em;
+      margin-bottom: 0.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .menu-header p {
+      font-size: 1.3em;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Section filtres */
+    .filter-section {
+      background: var(--card-background);
+      padding: 2em;
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 80px;
+      z-index: 999;
+    }
+
+    .filter-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 1em 3em 1em 1.5em;
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      font-size: 1.1em;
+      transition: var(--transition);
+      font-family: 'Poppins', sans-serif;
+      background: var(--card-background);
+      color: var(--text-color);
+    }
+
+    #searchInput:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 1.2em;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-color);
+      font-size: 1.2em;
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 1em 2em;
+      border: none;
+      border-radius: 25px;
+      background: var(--card-background);
+      color: var(--text-color);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow);
+      font-weight: 500;
+      font-size: 1em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      transition: var(--transition);
+      z-index: 0;
+    }
+
+    .filter-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .filter-btn:hover::before {
+      left: 0;
+    }
+
+    .filter-btn:hover span {
+      color: var(--white);
+    }
+
+    .filter-btn.active {
+      background: var(--gradient-primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    .filter-btn.active::before {
+      left: 0;
+    }
+
+    /* Statistiques du menu */
+    .menu-stats {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 2em;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5em;
+    }
+
+    .stat-card {
+      background: var(--card-background);
+      padding: 1.5em;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-color);
+    }
+
+    .stat-number {
+      font-size: 2.5em;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      color: var(--text-color);
+      font-weight: 500;
+      margin-top: 0.5em;
+    }
+
+    /* Container principal du menu */
+    .menu-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3em 2em;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2em;
+      margin-top: 2em;
+    }
+
+    /* Cartes de plats */
+    .dish-card {
+      background: var(--card-background);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      position: relative;
+      border: 2px solid transparent;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 30px var(--shadow-color);
+      border-color: var(--primary-color);
+    }
+
+    .dish-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .dish-card:hover .dish-image {
+      transform: scale(1.05);
+    }
+
+    .dish-content {
+      padding: 1.5em;
+    }
+
+    .dish-category {
+      display: inline-block;
+      padding: 0.3em 1em;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1em;
+    }
+
+    .category-salty {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: var(--white);
+    }
+
+    .category-sweet {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      color: var(--white);
+    }
+
+    .category-drinks {
+      background: linear-gradient(135deg, #27ae60, #229954);
+      color: var(--white);
+    }
+
+    .dish-name {
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+      color: var(--text-color);
+    }
+
+    .dish-description {
+      color: var(--text-color);
+      opacity: 0.8;
+      line-height: 1.6;
+      margin-bottom: 1em;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .dish-price {
+      font-size: 1.3em;
+      font-weight: bold;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1em;
+    }
+
+    .dish-actions {
+      display: flex;
+      gap: 0.5em;
+    }
+
+    .btn {
+      padding: 0.8em 1.5em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      font-size: 0.9em;
+      flex: 1;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--gradient-secondary);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--card-background);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    /* Timer de préparation */
+    .preparation-timer {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-background);
+      padding: 2em;
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px var(--shadow-color);
+      z-index: 3000;
+      text-align: center;
+      border: 3px solid var(--primary-color);
+      min-width: 300px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .preparation-timer.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .timer-dish-name {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 1em;
+    }
+
+    .timer-display {
+      font-size: 3em;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 1em 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .timer-progress {
+      width: 100%;
+      height: 8px;
+      background: var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1em 0;
+    }
+
+    .timer-progress-bar {
+      height: 100%;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    .timer-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* Message vide */
+    .empty-message {
+      text-align: center;
+      padding: 4em 2em;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .empty-message i {
+      font-size: 4em;
+      margin-bottom: 1em;
+      color: var(--primary-color);
+      opacity: 0.5;
+    }
+
+    .empty-message h3 {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    .empty-message p {
+      font-size: 1.1em;
+      margin-bottom: 2em;
+    }
+
+    .empty-message .btn {
+      display: inline-block;
+      padding: 1em 2em;
+      background: var(--gradient-primary);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 25px;
+      transition: var(--transition);
+    }
+
+    .empty-message .btn:hover {
+      background: var(--gradient-secondary);
+      transform: translateY(-2px);
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 1.5em 2.5em;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: var(--transition);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      z-index: 2000;
+    }
+
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .notification.success {
+      background: var(--gradient-accent);
+    }
+
+    .notification.error {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 3em 2em;
+      margin-top: 5em;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      margin-bottom: 2em;
+    }
+
+    .footer-links a {
+      color: var(--white);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--gradient-primary);
+        padding: 2em;
+        gap: 1em;
+      }
+
+      .menu-header h1 {
+        font-size: 2.5em;
+      }
+
+      .filter-container {
+        gap: 1em;
+      }
+
+      .filter-buttons {
+        gap: 0.5em;
+      }
+
+      .filter-btn {
+        padding: 0.8em 1.5em;
+        font-size: 0.9em;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+      }
+
+      .menu-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1em;
+      }
+
+      .dish-actions {
+        flex-direction: column;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1em;
+      }
+
+      .nav-right {
+        gap: 0.5em;
+      }
+
+      .preparation-timer {
+        min-width: 250px;
+        padding: 1.5em;
+      }
+
+      .timer-display {
+        font-size: 2em;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    
+
+    .stat-card {
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .timer-display {
+      animation: pulse 1s infinite;
+    }
+
+    /* Loading animation */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4em;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-left">
+      <div class="logo">
+        <i class="fas fa-utensils"></i>
+        Chater's
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+        <a href="menu.html" class="active"><i class="fas fa-book-open"></i> Menu</a>
+        <a href="reservations.html"><i class="fas fa-calendar-alt"></i> Réservation</a>
+        <a href="index.html#contact"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Basculer le thème">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Header du menu -->
+  <div class="menu-header">
+    <div class="menu-header-content">
+      <h1><i class="fas fa-book-open"></i> Notre Menu</h1>
+      <p>Découvrez notre sélection de plats savoureux, préparés avec passion par notre chef</p>
+    </div>
+  </div>
+
+  <!-- Section filtres -->
+  <div class="filter-section">
+    <div class="filter-container">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Rechercher un plat...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">
+          <span><i class="fas fa-th-large"></i> Tous les plats</span>
+        </button>
+        <button class="filter-btn" data-filter="Salty">
+          <span><i class="fas fa-hamburger"></i> Salé</span>
+        </button>
+        <button class="filter-btn" data-filter="Sweet">
+          <span><i class="fas fa-cookie"></i> Sucré</span>
+        </button>
+        <button class="filter-btn" data-filter="Drinks">
+          <span><i class="fas fa-glass-martini"></i> Boissons</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistiques du menu -->
+  <div class="menu-stats">
+    <div class="stat-card">
+      <div class="stat-number" id="totalDishes">0</div>
+      <div class="stat-label">Plats au total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="saltyCount">0</div>
+      <div class="stat-label">Plats salés</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="sweetCount">0</div>
+      <div class="stat-label">Plats sucrés</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="drinksCount">0</div>
+      <div class="stat-label">Boissons</div>
+    </div>
+  </div>
+
+  <!-- Container principal du menu -->
+  <div class="menu-container">
+    <div class="menu-grid" id="menuGrid">
+      <!-- Les plats seront ajoutés ici dynamiquement -->
+    </div>
+
+    <!-- Message vide -->
+    <div class="empty-message" id="emptyMessage" style="display: none;">
+      <i class="fas fa-utensils"></i>
+      <h3>Aucun plat trouvé</h3>
+      <p>Il n'y a pas encore de plats dans cette catégorie ou correspondant à votre recherche.</p>
+      <a href="index.html#add-recipe" class="btn">
+        <i class="fas fa-plus"></i> Ajouter une recette
+      </a>
+    </div>
+  </div>
+
+  <!-- Timer de préparation -->
+  <div class="preparation-timer" id="preparationTimer">
+    <button class="timer-close" onclick="closeTimer()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="timer-dish-name" id="timerDishName"></div>
+    <div>Temps de préparation restant :</div>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="timer-progress">
+      <div class="timer-progress-bar" id="timerProgressBar"></div>
+    </div>
+    <div id="timerStatus">Préparation en cours...</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Accueil</a>
+        <a href="menu.html">Menu</a>
+        <a href="reservations.html">Réservation</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <p>&copy; 2024 Chater's Restaurant. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Gestion du thème
+    class ThemeManager {
+      constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.themeToggle = document.getElementById('themeToggle');
+        this.init();
+      }
+
+      init() {
+        this.applyTheme(this.currentTheme);
+        this.themeToggle.addEventListener('click', () => this.toggleTheme());
+      }
+
+      applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const icon = this.themeToggle.querySelector('i');
+        
+        if (theme === 'dark') {
+          icon.className = 'fas fa-sun';
+        } else {
+          icon.className = 'fas fa-moon';
+        }
+        
+        this.currentTheme = theme;
+        localStorage.setItem('theme', theme);
+      }
+
+      toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme(newTheme);
+      }
+    }
+
+    // Gestion du timer de préparation
+    class PreparationTimer {
+      constructor() {
+        this.timerElement = document.getElementById('preparationTimer');
+        this.displayElement = document.getElementById('timerDisplay');
+        this.progressBar = document.getElementById('timerProgressBar');
+        this.dishNameElement = document.getElementById('timerDishName');
+        this.statusElement = document.getElementById('timerStatus');
+        this.currentTimer = null;
+      }
+
+      getPreparationTime(dishType) {
+        const times = {
+          'Salty': { min: 15, max: 25 }, // 15-25 minutes
+          'Sweet': { min: 10, max: 20 }, // 10-20 minutes
+          'Drinks': { min: 2, max: 5 }   // 2-5 minutes
+        };
+        
+        const range = times[dishType] || { min: 10, max: 20 };
+        return Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+      }
+
+      startTimer(dishName, dishType) {
+        if (this.currentTimer) {
+          clearInterval(this.currentTimer);
+        }
+
+        const totalMinutes = this.getPreparationTime(dishType);
+        let totalSeconds = totalMinutes * 60;
+        const originalTotalSeconds = totalSeconds;
+
+        this.dishNameElement.textContent = dishName;
+        this.statusElement.textContent = 'Préparation en cours...';
+        this.timerElement.classList.add('show');
+
+        this.currentTimer = setInterval(() => {
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          
+          this.displayElement.textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          // Mettre à jour la barre de progression
+          const progress = ((originalTotalSeconds - totalSeconds) / originalTotalSeconds) * 100;
+          this.progressBar.style.width = `${progress}%`;
+
+          if (totalSeconds <= 0) {
+            clearInterval(this.currentTimer);
+            this.onTimerComplete();
+          }
+
+          totalSeconds--;
+        }, 1000);
+      }
+
+      onTimerComplete() {
+        this.displayElement.textContent = '00:00';
+        this.progressBar.style.width = '100%';
+        this.statusElement.textContent = '✅ Votre plat est prêt !';
+        
+        // Notification sonore (si supportée)
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('Chater\'s Restaurant', {
+            body: `Votre ${this.dishNameElement.textContent} est prêt !`,
+            icon: '/favicon.ico'
+          });
+        }
+
+        // Auto-fermeture après 5 secondes
+        setTimeout(() => {
+          this.closeTimer();
+        }, 5000);
+      }
+
+      closeTimer() {
+        if (this.currentTimer) {
+          clearInterval(this.currentTimer);
+          this.currentTimer = null;
+        }
+        this.timerElement.classList.remove('show');
+      }
+    }
+
+    // Fonction globale pour fermer le timer
+    function closeTimer() {
+      window.preparationTimer.closeTimer();
+    }
+
+    // Classe de gestion du menu
+    class MenuManager {
+      constructor() {
+        this.currentFilter = 'all';
+        this.searchQuery = '';
+        this.dishes = [];
+        this.defaultDishes = [
+          {
+            id: 1,
+            name: "Burger Gourmet",
+            type: "Salty",
+            desc: "Burger artisanal avec steak de bœuf, fromage de chèvre, roquette et tomates confites",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500",
+            price: "16.90"
+          },
+          {
+            id: 2,
+            name: "Salade César",
+            type: "Salty",
+            desc: "Salade romaine, croûtons, parmesan, poulet grillé et sauce César maison",
+            img: "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=500",
+            price: "14.50"
+          },
+          {
+            id: 3,
+            name: "Tiramisu Maison",
+            type: "Sweet",
+            desc: "Tiramisu traditionnel aux biscuits imbibés de café et mascarpone",
+            img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=500",
+            price: "8.90"
+          },
+          {
+            id: 4,
+            name: "Tarte aux Fruits",
+            type: "Sweet",
+            desc: "Tarte sablée garnie de fruits de saison et crème pâtissière",
+            img: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=500",
+            price: "7.50"
+          },
+          {
+            id: 5,
+            name: "Cocktail Mojito",
+            type: "Drinks",
+            desc: "Rhum blanc, menthe fraîche, citron vert et eau gazeuse",
+            img: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=500",
+            price: "9.50"
+          },
+          {
+            id: 6,
+            name: "Jus de Fruits Frais",
+            type: "Drinks",
+            desc: "Jus pressé à froid avec fruits de saison",
+            img: "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=500",
+            price: "5.90"
+          },
+          {
+            id: 7,
+            name: "Risotto aux Champignons",
+            type: "Salty",
+            desc: "Risotto crémeux aux champignons de Paris et truffe",
+            img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=500",
+            price: "18.90"
+          },
+          {
+            id: 8,
+            name: "Fondant au Chocolat",
+            type: "Sweet",
+            desc: "Fondant au chocolat noir avec cœur coulant et glace vanille",
+            img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500",
+            price: "9.90"
+          }
+        ];
+        
+        this.setupEventListeners();
+        this.initializeMenu();
+      }
+
+      setupEventListeners() {
+        // Filtres
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => this.handleFilter(e));
+        });
+
+        // Recherche
+        const searchInput = document.getElementById('searchInput');
+        let debounceTimer;
+        
+        searchInput.addEventListener('input', (e) => {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            this.searchQuery = e.target.value.toLowerCase();
+            this.renderDishes();
+          }, 300);
+        });
+
+        // Gestion du menu mobile
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+
+        // Écouter les changements dans localStorage pour synchroniser avec les nouvelles recettes
+        window.addEventListener('storage', () => {
+          this.loadDishes();
+          this.renderDishes();
+          this.updateStats();
+        });
+
+        // Vérifier périodiquement les nouvelles recettes
+        setInterval(() => {
+          this.loadDishes();
+          this.renderDishes();
+          this.updateStats();
+        }, 2000);
+      }
+
+      initializeMenu() {
+        this.loadDishes();
+        this.renderDishes();
+        this.updateStats();
+      }
+
+      loadDishes() {
+        // Charger les recettes depuis localStorage
+        const savedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
+        
+        // Combiner les plats par défaut avec les recettes ajoutées
+        const allDishes = [...this.defaultDishes];
+        
+        // Ajouter les recettes personnalisées avec leur prix saisi
+        savedRecipes.forEach(recipe => {
+          if (!allDishes.find(dish => dish.id === recipe.id)) {
+            allDishes.push({
+              ...recipe,
+              price: recipe.price || "0.00" // Utiliser le prix saisi ou 0.00 par défaut
+            });
+          }
+        });
+
+        this.dishes = allDishes;
+      }
+
+      
+
+      handleFilter(e) {
+        // Mettre à jour les boutons de filtre
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        e.currentTarget.classList.add('active');
+
+        // Mettre à jour le filtre actuel
+        this.currentFilter = e.currentTarget.dataset.filter;
+        this.renderDishes();
+      }
+
+      filterDishes() {
+        let filteredDishes = this.dishes;
+
+        // Filtrer par catégorie
+        if (this.currentFilter !== 'all') {
+          filteredDishes = filteredDishes.filter(dish => dish.type === this.currentFilter);
+        }
+
+        // Filtrer par recherche
+        if (this.searchQuery) {
+          filteredDishes = filteredDishes.filter(dish => 
+            dish.name.toLowerCase().includes(this.searchQuery) ||
+            dish.desc.toLowerCase().includes(this.searchQuery)
+          );
+        }
+
+        return filteredDishes;
+      }
+
+      renderDishes() {
+        const menuGrid = document.getElementById('menuGrid');
+        const emptyMessage = document.getElementById('emptyMessage');
+        const filteredDishes = this.filterDishes();
+
+        if (filteredDishes.length === 0) {
+          menuGrid.style.display = 'none';
+          emptyMessage.style.display = 'block';
+          return;
+        }
+
+        menuGrid.style.display = 'grid';
+        emptyMessage.style.display = 'none';
+
+        menuGrid.innerHTML = filteredDishes.map(dish => this.createDishCard(dish)).join('');
+      }
+
+      createDishCard(dish) {
+        const categoryClass = `category-${dish.type.toLowerCase()}`;
+        const categoryIcon = this.getCategoryIcon(dish.type);
+
+        return `
+          <div class="dish-card" data-id="${dish.id}">
+            <img src="${dish.img}" alt="${dish.name}" class="dish-image" loading="lazy">
+            <div class="dish-content">
+              <span class="dish-category ${categoryClass}">
+                <i class="${categoryIcon}"></i> ${dish.type}
+              </span>
+              <h3 class="dish-name">${dish.name}</h3>
+              <p class="dish-description">${dish.desc}</p>
+              <div class="dish-price">${dish.price} dh</div>
+              <div class="dish-actions">
+                <button class="btn btn-primary" onclick="menuManager.addToOrder('${dish.id}')">
+                  <i class="fas fa-plus"></i> Commander
+                </button>
+                <button class="btn btn-secondary" onclick="menuManager.viewDetails('${dish.id}')">
+                  <i class="fas fa-eye"></i> Détails
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      getCategoryIcon(type) {
+        const icons = {
+          'Salty': 'fas fa-hamburger',
+          'Sweet': 'fas fa-cookie',
+          'Drinks': 'fas fa-glass-martini'
+        };
+        return icons[type] || 'fas fa-utensils';
+      }
+
+      updateStats() {
+        const stats = {
+          total: this.dishes.length,
+          salty: this.dishes.filter(dish => dish.type === 'Salty').length,
+          sweet: this.dishes.filter(dish => dish.type === 'Sweet').length,
+          drinks: this.dishes.filter(dish => dish.type === 'Drinks').length
+        };
+
+        // Animer les compteurs
+        this.animateCounter('totalDishes', stats.total);
+        this.animateCounter('saltyCount', stats.salty);
+        this.animateCounter('sweetCount', stats.sweet);
+        this.animateCounter('drinksCount', stats.drinks);
+      }
+
+      animateCounter(elementId, targetValue) {
+        const element = document.getElementById(elementId);
+        const currentValue = parseInt(element.textContent) || 0;
+        const increment = targetValue > currentValue ? 1 : -1;
+        const duration = 1000;
+        const steps = Math.abs(targetValue - currentValue);
+        const stepDuration = duration / steps;
+
+        if (steps === 0) return;
+
+        let current = currentValue;
+        const timer = setInterval(() => {
+          current += increment;
+          element.textContent = current;
+          
+          if (current === targetValue) {
+            clearInterval(timer);
+          }
+        }, stepDuration);
+      }
+
+      addToOrder(dishId) {
+        const dish = this.dishes.find(d => d.id == dishId);
+        if (dish) {
+          // Démarrer le timer de préparation
+          window.preparationTimer.startTimer(dish.name, dish.type);
+          
+          // Simuler l'ajout à la commande
+          this.showNotification(`${dish.name} ajouté à votre commande ! Préparation en cours...`, 'success');
+          
+          // Sauvegarder dans localStorage pour une future fonctionnalité de panier
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          const existingItem = cart.find(item => item.id == dishId);
+          
+          if (existingItem) {
+            existingItem.quantity += 1;
+          } else {
+            cart.push({ ...dish, quantity: 1 });
+          }
+          
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      }
+
+      viewDetails(dishId) {
+        const dish = this.dishes.find(d => d.id == dishId);
+        if (dish) {
+          // Créer une modal avec les détails du plat
+          this.showDishModal(dish);
+        }
+      }
+
+      showDishModal(dish) {
+        // Créer et afficher une modal avec les détails
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+          <div class="dish-modal">
+            <button class="close-btn" onclick="this.parentElement.parentElement.remove()">
+              <i class="fas fa-times"></i>
+            </button>
+            <img src="${dish.img}" alt="${dish.name}" class="modal-image">
+            <div class="modal-content">
+              <span class="dish-category category-${dish.type.toLowerCase()}">
+                <i class="${this.getCategoryIcon(dish.type)}"></i> ${dish.type}
+              </span>
+              <h2>${dish.name}</h2>
+              <p class="modal-description">${dish.desc}</p>
+              <div class="modal-price">${dish.price} dh</div>
+              <button class="btn btn-primary" onclick="menuManager.addToOrder('${dish.id}'); this.parentElement.parentElement.parentElement.remove();">
+                <i class="fas fa-plus"></i> Ajouter à la commande
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Ajouter les styles pour la modal
+        const style = document.createElement('style');
+        style.textContent = `
+          .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 2em;
+          }
+          .dish-modal {
+            background: var(--card-background);
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+          }
+          .close-btn {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 1;
+          }
+          .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+          }
+          .modal-content {
+            padding: 2em;
+          }
+          .modal-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 1em 0;
+            color: var(--text-color);
+          }
+          .modal-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1em 0;
+          }
+        `;
+
+        document.head.appendChild(style);
+        document.body.appendChild(modal);
+
+        // Fermer la modal en cliquant à l'extérieur
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.remove();
+            style.remove();
+          }
+        });
+      }
+
+      showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
+        notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
+        
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.add('show');
+          setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+          }, 3000);
+        }, 100);
+      }
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialiser les gestionnaires
+      window.themeManager = new ThemeManager();
+      window.preparationTimer = new PreparationTimer();
+      window.menuManager = new MenuManager();
+      
+      // Demander permission pour les notifications
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    });
+
+    // Scroll fluide pour les liens d'ancrage
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
